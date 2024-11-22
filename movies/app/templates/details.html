@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }} - Movie Details</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://t3.ftcdn.net/jpg/02/81/84/98/240_F_281849878_0Memw2hdFHyggA8gmK6rc8QSU9JnjYba.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            width: 85%;
+            max-width: 1200px;
+            padding: 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #ffcc70;
+            margin-bottom: 20px;
+            width: 100%;
+            text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Left Section: Movie Poster, Title, and Action Buttons */
+        .movie-poster {
+            flex: 1 1 300px;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .movie-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc70;
+            margin-top: 15px;
+            text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .action-buttons a {
+            background-color: #ffcc70;
+            color: #1a1a1a;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .action-buttons a:hover {
+            background-color: #ffc040;
+            box-shadow: 0px 4px 10px rgba(255, 204, 112, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Right Section: Movie Details */
+        .movie-details {
+            flex: 2 1 500px;
+            max-width: 700px;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #e6e6e6;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .movie-details p {
+            margin: 5px 0;
+        }
+
+        .movie-details strong {
+            font-weight: bold;
+            color: #ffcc70;
+        }
+
+        .movie-details a {
+            color: #ffcc70;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .movie-details a:hover {
+            color: #ffc040;
+        }
+
+        /* Back Button */
+        .back-button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button {
+            padding: 12px 30px;
+            background-color: #ffcc70;
+            border-radius: 50px;
+            color: #1a1a1a;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #ffc040;
+            box-shadow: 0px 4px 10px rgba(255, 204, 112, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+            }
+
+            .movie-poster {
+                margin-bottom: 20px;
+            }
+
+            .movie-details {
+                width: 100%;
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="movie-poster">
+            <img src="{{ movie.poster }}" alt="Poster of {{ movie.title }}">
+            <div class="movie-title">{{ movie.title }}</div>
+            <div class="action-buttons">
+                <a href="{{ movie.netflix_link }}">Watch Now</a>
+                <a href="{% url 'add_to_watchlist' movie.id %}">Add to Watchlist</a>
+                <a href="{% url 'main' %}">Back to Movies</a>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="movie-details">
+            <p><strong>Genre:</strong> {{ movie.genre }}</p>
+            <p><strong>Languages:</strong> {{ movie.languages }}</p>
+            <p><strong>IMDb Score:</strong> {{ movie.imdb_score }}</p>
+            <p><strong>Director:</strong> {{ movie.director }}</p>
+            <p><strong>Writer:</strong> {{ movie.writer }}</p>
+            <p><strong>Actors:</strong> {{ movie.actors }}</p>
+            <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
+            <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <p><strong>Country Availability:</strong> {{ movie.country_availability }}</p>
+            <p><strong>Summary:</strong> {{ movie.summary }}</p>
+            <p><strong>IMDb Votes:</strong> {{ movie.imdb_votes }}</p>
+            <p><strong>Awards:</strong> {{ movie.awards_received }} won, {{ movie.awards_nominated_for }} nominated</p>
+            <p><strong>Box Office:</strong> {{ movie.boxoffice }}</p>
+        </div>
+    </div>
+</body>
+</html>
